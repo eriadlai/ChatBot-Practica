@@ -12,10 +12,12 @@ public class ClientHandler implements Runnable {
     private BufferedWriter bufferedWriter;
     private String clientUsername;
 
+   
     public ClientHandler(Socket socket) throws Exception {
         if (clientHandlers.size() == 4) {
             throw new Exception("No more clients allowed");
         }
+       
         try {
             this.socket = socket;
             this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
@@ -23,11 +25,14 @@ public class ClientHandler implements Runnable {
             this.clientUsername = bufferedReader.readLine();
             clientHandlers.add(this);
             broadcastMessage("Server: " + clientUsername + " has entered the chat.");
+            
         } catch (IOException e) {
             closeEverything(socket, bufferedReader, bufferedWriter);
         }
+         
     }
-
+   public ClientHandler(){
+   }
     @Override
     public void run() {
 
@@ -36,14 +41,17 @@ public class ClientHandler implements Runnable {
         while (socket.isConnected()) {
             try {
                 messageFromClient = bufferedReader.readLine();
+                if(messageFromClient.equals("GANADOR-PATATA")){
+                broadcastMessage("Server: "+clientUsername + "ha ganado el juego!");
+                closeEverything(socket, bufferedReader, bufferedWriter);
+                }
                 broadcastMessage(messageFromClient);
             } catch (IOException e) {
                 closeEverything(socket, bufferedReader, bufferedWriter);
                 break;
-            }
+            } 
         }
     }
-
     public void broadcastMessage(String messageToSend) {
         for (ClientHandler clientHandler :
                 clientHandlers) {
@@ -61,8 +69,7 @@ public class ClientHandler implements Runnable {
     public void removeClientHandler () {
         clientHandlers.remove(this);
         broadcastMessage("Server: " + clientUsername + " lost the challenge");
-    }
-
+    } 
     public void closeEverything(Socket socket, BufferedReader bufferedReader, BufferedWriter bufferedWriter) {
         removeClientHandler();
         try {
