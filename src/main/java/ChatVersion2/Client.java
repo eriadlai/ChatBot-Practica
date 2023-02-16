@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Client {
     static int oResultado;
-    static int[] oListadoNumeros = new int[24];
+    static int[] oListadoNumeros = new int[25];
     private Socket socket;
     private BufferedReader bufferedReader;
     private BufferedWriter bufferedWriter;
@@ -40,33 +40,41 @@ public class Client {
                         System.out.println("SUMA: +");
                         System.out.println("RESTA: -");
                         System.out.println("MULTIPLICACION: *");                                
-                        System.out.println("DIVISION: *");
+                        System.out.println("DIVISION: /");
                         messageToSend = scanner.nextLine();
                         switch(messageToSend){
                             case "+":
                                 oResultado = oResultado + oValor;
+                                System.out.println("SUMANDO!");
                                 break;
                             case "-":
                                 oResultado = oResultado - oValor;
+                                System.out.println("RESTANDO!");
                                 break;
                             case "*":
                                 oResultado = oResultado * oValor;
+                                System.out.println("MULTIPLICANDO!");
                                 break;
                             case "/":
                                 oResultado = oResultado/oValor;
+                                System.out.println("DIVIDIENDO!");
                                 break;
                             default:
                                 System.out.println("FAVOR DE INGRESAR UNA OPCION VALIDA");
                                 break;   
                         }
+                        System.out.println("PUNTAJE ACTUAL: "+oResultado);
+                        for(int i = 0;i < oListadoNumeros.length;i++){
+                            System.out.println("["+i+"]:"+oListadoNumeros[i]);
+                        }
                         if(oResultado == 100){
                             System.out.println("EL JUGADOR HA GANADO!!");
-                        bufferedWriter.write("GANADOR-PATATA");
-                        bufferedWriter.newLine();
-                        bufferedWriter.flush();
+                            bufferedWriter.write("GANADOR-PATATA");
+                            bufferedWriter.newLine();
+                            bufferedWriter.flush();
                             }else if(oResultado >200){
-                            System.out.println("=======FIN DEL JUEGO======");
-                            closeEverything(socket, bufferedReader, bufferedWriter);
+                                System.out.println("=======FIN DEL JUEGO======");
+                                bufferedWriter.close();
                             }
                     }
                     oListadoNumeros[oIndex] = 0;
@@ -92,22 +100,33 @@ public class Client {
                 while (socket.isConnected()) {
                     try {
                         messageFromChat = bufferedReader.readLine();
-                        int oValor = Integer.parseInt(messageFromChat);
-                        int oContador = 25;
-                        for(int i=0;i>oListadoNumeros.length;i++){
-                            oContador=-1;
-                            if(oListadoNumeros[i] == 0){
-                            oListadoNumeros[i] = oValor;
+                        if(messageFromChat.contains(":")){
+                            System.out.println(". . .");
+                        }else{
+                            int oValor = Integer.parseInt(messageFromChat);
+                            int oContador = 25;
+                            for(int i=0;i<  oListadoNumeros.length;i++){
+                                oContador--;
+                                if(oListadoNumeros[i] == 0){
+                                oListadoNumeros[i] = oValor;
+                                break;
+                                }
+                                if(oContador == 0){
+                                System.out.println("=====FIN DEL JUEGO======");
+                                bufferedWriter.close();
+                                break;
+                                }       
                             }
-                            if(oContador == 0){
-                            System.out.println("=====FIN DEL JUEGO======");
-                            closeEverything(socket, bufferedReader, bufferedWriter);
-                            }       
                         }
+                        
                         System.out.println(messageFromChat);
                     } catch (IOException e) {
                         closeEverything(socket, bufferedReader, bufferedWriter);
                     }
+                    System.out.println("PUNTAJE ACTUAL: "+oResultado);
+                        for(int i = 0;i < oListadoNumeros.length;i++){
+                            System.out.println("["+i+"]:"+oListadoNumeros[i]);
+                        }
                 }
             }
         }).start();
