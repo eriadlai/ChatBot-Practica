@@ -41,10 +41,14 @@ public class ClientHandler implements Runnable {
         while (socket.isConnected()) {
             try {
                 messageFromClient = bufferedReader.readLine();
-                if(messageFromClient.equals("GANADOR-PATATA")){
+                if(messageFromClient == null){
+                    closeEverything(socket, bufferedReader, bufferedWriter);
+                    break;
+                }else if(messageFromClient.equals("GANADOR-PATATA")){
                 broadcastMessage("Server: "+clientUsername + "ha ganado el juego!");
                 closeEverything(socket, bufferedReader, bufferedWriter);
                 }
+                
                 broadcastMessage(messageFromClient);
             } catch (IOException e) {
                 closeEverything(socket, bufferedReader, bufferedWriter);
@@ -56,7 +60,7 @@ public class ClientHandler implements Runnable {
         for (ClientHandler clientHandler :
                 clientHandlers) {
             try {
-                if (clientHandler != this) {
+                if (clientHandler != this|| clientHandler != null) {
                     clientHandler.bufferedWriter.write(messageToSend);
                     clientHandler.bufferedWriter.newLine();
                     clientHandler.bufferedWriter.flush();

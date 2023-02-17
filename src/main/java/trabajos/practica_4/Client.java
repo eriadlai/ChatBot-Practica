@@ -57,13 +57,13 @@ public class Client {
                                             break;
                                     }
                                     if(oResultado == 100){
-                                    System.out.println("EL JUGADOR HA GANADO!!");
-                                    out.close();
-                                     clientSocket.close();
+                                        System.out.println("EL JUGADOR HA GANADO!!");
+                                        out.close();
+                                        clientSocket.close();
                                     }else if(oResultado >200){
-                                    System.out.println("=======FIN DEL JUEGO======");
-                                       out.close();
-                                       clientSocket.close();
+                                        System.out.println("=======FIN DEL JUEGO======");
+                                        out.close();
+                                        clientSocket.close();
                                     }
                                 }
                            oListadoNumeros[oIndex] = 0;

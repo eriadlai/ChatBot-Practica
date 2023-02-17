@@ -72,9 +72,10 @@ public class Client {
                             bufferedWriter.write("GANADOR-PATATA");
                             bufferedWriter.newLine();
                             bufferedWriter.flush();
+                            System.exit(0);
                             }else if(oResultado >200){
                                 System.out.println("=======FIN DEL JUEGO======");
-                                bufferedWriter.close();
+                                System.exit(0);
                             }
                     }
                     oListadoNumeros[oIndex] = 0;
@@ -113,8 +114,7 @@ public class Client {
                                 }
                                 if(oContador == 0){
                                 System.out.println("=====FIN DEL JUEGO======");
-                                bufferedWriter.close();
-                                break;
+                                System.exit(0);
                                 }       
                             }
                         }

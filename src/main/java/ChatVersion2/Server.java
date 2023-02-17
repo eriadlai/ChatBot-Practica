@@ -37,7 +37,7 @@ public class Server {
                 ClientHandler game = new ClientHandler();
                 game.broadcastMessage(sendNumbers()+"");
                 if(ClientHandler.clientHandlers.size()==1){
-                    game.broadcastMessage("==GANASTE EL JUEGO!!");
+                    game.broadcastMessage("==:GANASTE EL JUEGO!!:==");
                     System.out.println("FIN DEL JUEGO");
                     break;
                 }
