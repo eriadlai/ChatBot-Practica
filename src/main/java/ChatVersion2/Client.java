@@ -36,32 +36,37 @@ public class Client {
                     int oIndex = Integer.parseInt(messageToSend);
                     if(oIndex>= 0 && oIndex <= 24){
                         int oValor = oListadoNumeros[oIndex];
-                        System.out.println("===INGRESE UNA OPERACION===");                                  
-                        System.out.println("SUMA: +");
-                        System.out.println("RESTA: -");
-                        System.out.println("MULTIPLICACION: *");                                
-                        System.out.println("DIVISION: /");
-                        messageToSend = scanner.nextLine();
-                        switch(messageToSend){
-                            case "+":
-                                oResultado = oResultado + oValor;
-                                System.out.println("SUMANDO!");
-                                break;
-                            case "-":
-                                oResultado = oResultado - oValor;
-                                System.out.println("RESTANDO!");
-                                break;
-                            case "*":
-                                oResultado = oResultado * oValor;
-                                System.out.println("MULTIPLICANDO!");
-                                break;
-                            case "/":
-                                oResultado = oResultado/oValor;
-                                System.out.println("DIVIDIENDO!");
-                                break;
-                            default:
-                                System.out.println("FAVOR DE INGRESAR UNA OPCION VALIDA");
-                                break;   
+                        if (oValor != 0) {
+
+                            System.out.println("===INGRESE UNA OPERACION===");
+                            System.out.println("SUMA: +");
+                            System.out.println("RESTA: -");
+                            System.out.println("MULTIPLICACION: *");
+                            System.out.println("DIVISION: /");
+                            messageToSend = scanner.nextLine();
+                            switch (messageToSend) {
+                                case "+":
+                                    oResultado = oResultado + oValor;
+                                    System.out.println("SUMANDO!");
+                                    break;
+                                case "-":
+                                    oResultado = oResultado - oValor;
+                                    System.out.println("RESTANDO!");
+                                    break;
+                                case "*":
+                                    oResultado = oResultado * oValor;
+                                    System.out.println("MULTIPLICANDO!");
+                                    break;
+                                case "/":
+                                    oResultado = oResultado / oValor;
+                                    System.out.println("DIVIDIENDO!");
+                                    break;
+                                default:
+                                    System.out.println("FAVOR DE INGRESAR UNA OPCION VALIDA");
+                                    break;
+                            }
+                        } else {
+                            System.out.println("SELECCIONE OTRO VALOR");
                         }
                         System.out.println("PUNTAJE ACTUAL: "+oResultado);
                         for(int i = 0;i < oListadoNumeros.length;i++){

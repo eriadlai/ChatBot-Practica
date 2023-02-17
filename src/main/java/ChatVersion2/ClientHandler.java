@@ -45,8 +45,11 @@ public class ClientHandler implements Runnable {
                     closeEverything(socket, bufferedReader, bufferedWriter);
                     break;
                 }else if(messageFromClient.equals("GANADOR-PATATA")){
-                broadcastMessage("Server: "+clientUsername + "ha ganado el juego!");
-                closeEverything(socket, bufferedReader, bufferedWriter);
+                    broadcastMessage("Server: " + clientUsername + "ha ganado el juego!");
+                    for (ClientHandler clientHandler :
+                            clientHandlers) {
+                        closeEverything(clientHandler.socket, clientHandler.bufferedReader, clientHandler.bufferedWriter);
+                    }
                 }
                 
                 broadcastMessage(messageFromClient);
